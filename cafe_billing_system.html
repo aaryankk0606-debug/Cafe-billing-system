@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cafe Billing System</title>
+<style>
+:root{--bg:#f4f1eb;--paper:#fffdf9;--ink:#242820;--muted:#77796f;--green:#263d32;--green2:#365746;--line:#e4e0d7;--gold:#c49a55;--red:#a53d32}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif}button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.shell{min-height:100vh;display:flex;flex-direction:column}.topbar{height:auto;min-height:72px;padding:16px clamp(16px,4vw,54px);background:var(--green);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.2px}.brandmark{width:40px;height:40px;border:1px solid #bfa16b;border-radius:50%;display:grid;place-items:center;color:#e5c58c;font-size:19px}.brand small{display:block;font-size:11px;font-weight:400;letter-spacing:2px;color:#d8ded8;margin-top:4px}.top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.top-actions span{font-size:13px;color:#e0e5e0}.btn{border:0;border-radius:8px;padding:12px 17px;font-weight:700;transition:.15s}.btn-primary{background:var(--green);color:white}.btn-primary:hover{background:var(--green2)}.btn-light{background:#fff;color:var(--green);border:1px solid var(--line)}.btn-gold{background:var(--gold);color:#211d16}.btn-danger{background:#fff0ee;color:var(--red);border:1px solid #f0d2cd}.btn:disabled{opacity:.45;cursor:not-allowed}
+main{width:min(1180px,100%);margin:0 auto;padding:clamp(18px,4vw,42px);flex:1}.eyebrow{font-size:11px;letter-spacing:2px;font-weight:800;color:var(--gold);text-transform:uppercase}.muted{color:var(--muted)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(28px,4vw,43px);line-height:1.1;margin:12px 0}h2{font-size:clamp(21px,3vw,29px);margin-bottom:8px}h3{font-size:17px;margin-bottom:7px}.lead{color:var(--muted);line-height:1.65;max-width:590px}.layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch}.panel{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:clamp(20px,3vw,34px);box-shadow:0 8px 30px #2923150a}.login-layout{min-height:calc(100vh - 110px);align-items:center}.welcome{background:var(--green);color:#fff;border-radius:18px;padding:clamp(28px,5vw,54px);display:flex;flex-direction:column;justify-content:center;min-height:410px;position:relative;overflow:hidden}.welcome:after{content:"C";position:absolute;right:-8px;bottom:-85px;font-family:Georgia,serif;font-size:300px;color:#ffffff0b}.welcome .lead{color:#d9e0d9}.form-group{margin:19px 0}.form-group label{display:block;font-size:13px;font-weight:700;margin-bottom:8px}.form-group input{width:100%;padding:14px 15px;border:1px solid var(--line);border-radius:8px;background:#fffdf9;outline:none}.form-group input:focus{border-color:var(--green2);box-shadow:0 0 0 3px #36574618}.full{width:100%}.note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:15px}.error{color:var(--red);font-size:13px;margin-top:10px}.page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;flex-wrap:wrap;margin-bottom:26px}.page-head p{margin-bottom:0}.stats{display:flex;gap:10px;flex-wrap:wrap}.pill{font-size:12px;padding:8px 11px;border-radius:999px;background:#e8eee8;color:var(--green);font-weight:700}.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.product{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:12px;min-width:0}.product-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.product-icon{width:48px;height:48px;border-radius:12px;background:#edf0e9;display:grid;place-items:center;font-size:25px}.price{font-weight:800;font-size:21px;white-space:nowrap}.category{font-size:12px;color:var(--muted)}.available{font-size:11px;color:#3b7250;font-weight:700}.product .btn{margin-top:auto}.cart-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.8fr);gap:20px}.cart-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:14px;padding:17px 0;border-bottom:1px solid var(--line)}.qty{display:flex;align-items:center;gap:9px}.qty button{width:30px;height:30px;border-radius:7px;border:1px solid var(--line);background:#fff}.line-total{font-weight:800;min-width:70px;text-align:right}.summary-line{display:flex;justify-content:space-between;gap:12px;padding:10px 0;color:var(--muted);font-size:14px}.summary-line strong{color:var(--ink)}.summary-line.total{border-top:1px solid var(--line);margin-top:9px;padding-top:16px;font-size:19px;color:var(--ink);font-weight:800}.summary-line.total strong{font-size:23px;color:var(--green)}.summary-card{align-self:start}.action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.empty{text-align:center;padding:50px 20px}.empty .product-icon{margin:0 auto 16px}.bill-head{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:20px}.bill-meta{font-size:12px;color:var(--muted);line-height:1.8}.bill-table{width:100%;border-collapse:collapse;font-size:14px}.bill-table th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);background:#f4f2ec}.bill-table th,.bill-table td{padding:13px 10px;border-bottom:1px solid var(--line)}.bill-table th:nth-child(n+2),.bill-table td:nth-child(n+2){text-align:right}.bill-bottom{display:grid;grid-template-columns:1fr minmax(260px,.8fr);gap:24px;margin-top:22px}.payment-options{display:flex;gap:10px;flex-wrap:wrap}.pay-option{border:1px solid var(--line);border-radius:9px;background:white;padding:12px 18px;min-width:100px}.pay-option.active{border-color:var(--green);background:#edf2ec;color:var(--green);font-weight:800}.bill-total{background:var(--green);color:#fff;border-radius:12px;padding:22px}.bill-total .small{font-size:12px;letter-spacing:1.5px;color:#d7dfd8}.bill-total .amount{font-size:clamp(29px,4vw,40px);font-weight:800;margin:8px 0}.bill-total p{font-size:12px;color:#d7dfd8;margin-bottom:0}.success{padding:12px 14px;background:#e8f3e9;color:#28613b;border-radius:8px;font-size:13px;margin-top:14px}.footer{text-align:center;color:var(--muted);font-size:11px;padding:18px}
+@media(max-width:760px){.layout,.cart-layout,.bill-bottom{grid-template-columns:1fr}.login-layout{min-height:auto}.welcome{min-height:280px}.products{grid-template-columns:1fr 1fr}.panel{padding:20px}.cart-row{grid-template-columns:minmax(0,1fr) auto}.line-total{grid-column:2;grid-row:2}.bill-table{font-size:12px}.bill-table th,.bill-table td{padding:10px 5px}}
+@media(max-width:430px){.products{grid-template-columns:1fr}.topbar{align-items:flex-start}.cart-row{gap:8px}.price{font-size:19px}}
+@media print{body{background:white}.topbar,.footer,.no-print,.page-head .action-row{display:none!important}main{width:100%;padding:0}.panel{box-shadow:none;border:0;padding:0}.bill-total{background:#eee;color:#111}.bill-total .small,.bill-total p{color:#333}.page{display:none!important}#billingPage{display:block!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <div class="brand"><div class="brandmark">C</div><div>Cafe Billing System<small>CAFE STAFF PORTAL</small></div></div>
+  <div class="top-actions"><span id="staffLabel">Demo billing portal</span><button id="logoutBtn" class="btn btn-light hidden" onclick="logout()">Log out</button></div>
+</header>
+<main>
+  <section id="loginPage" class="page">
+    <div class="layout login-layout">
+      <div class="welcome"><div class="eyebrow">Cafe staff portal</div><h1>Fresh coffee,<br>faster billing.</h1><p class="lead">Log in to take orders, prepare bills and record payments at the counter.</p></div>
+      <div class="panel">
+        <div class="eyebrow">Welcome back</div><h2>Login to your account</h2><p class="lead">Enter your username and password to continue.</p>
+        <form id="loginForm">
+          <div class="form-group"><label for="username">Username</label><input id="username" autocomplete="username" placeholder="Enter your username" required></div>
+          <div class="form-group"><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" placeholder="Enter your password" required></div>
+          <button class="btn btn-primary full" type="submit">Login</button><div id="loginError" class="error" role="alert"></div>
+        </form>
+        <p class="note">Demo screen with sample data. Only Admin and Cashier accounts can log in.</p>
+        <p class="note"><strong>Demo credentials</strong><br>Admin: <code>admin</code> / <code>admin123</code><br>Cashier: <code>cashier</code> / <code>cashier123</code></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="menuPage" class="page hidden">
+    <div class="page-head"><div><div class="eyebrow">Our menu & pricing</div><h1>Popular Menu Items</h1><p class="lead">Simple menu, fixed prices. Discount and GST are added at billing.</p></div><div class="stats"><span class="pill">4 menu items</span><span class="pill">Prices in INR</span></div></div>
+    <div id="productGrid" class="products"></div>
+    <div class="action-row"><button class="btn btn-primary" onclick="openCart()">My Order / Cart (<span id="menuCartCount">0</span>) →</button></div>
+  </section>
+
+  <section id="cartPage" class="page hidden">
+    <div class="page-head"><div><div class="eyebrow">Your selection</div><h1>My Order / My Cart</h1><p class="lead">Review your items and update quantities before billing.</p></div><button class="btn btn-light" onclick="showPage('menuPage')">← Back to Menu</button></div>
+    <div id="cartContent"></div>
+  </section>
+
+  <section id="billingPage" class="page hidden">
+    <div class="page-head"><div><div class="eyebrow">Billing & payment</div><h1>Customer Bill</h1><p class="lead">Pay by Cash or UPI. Select a payment mode and confirm the bill.</p></div><button class="btn btn-light no-print" onclick="showPage('cartPage')">← Back to Cart</button></div>
+    <div class="panel">
+      <div class="bill-head"><div><div class="brand" style="color:var(--green)"><div class="brandmark">C</div><div>Cafe Billing System<small style="color:var(--muted)">CUSTOMER RECEIPT</small></div></div></div><div class="bill-meta" id="billMeta"></div></div>
+      <div style="overflow-x:auto"><table class="bill-table"><thead><tr><th>Item</th><th>Qty</th><th>Price (Rs.)</th><th>Total (Rs.)</th></tr></thead><tbody id="billRows"></tbody></table></div>
+      <div class="bill-bottom">
+        <div><h3>Payment Method</h3><p class="muted" style="font-size:13px">Choose how the customer will pay.</p><div class="payment-options"><button class="pay-option active" id="cashBtn" onclick="setPayment('Cash')">Cash</button><button class="pay-option" id="upiBtn" onclick="setPayment('UPI')">UPI</button></div><div id="upiInfo" class="note hidden">UPI selected. This demo records the payment mode only; it does not process a real UPI transaction.</div><div id="billMessage"></div></div>
+        <div><div class="panel" style="padding:18px;margin-bottom:14px"><div class="summary-line"><span>Sub-total</span><strong id="billSubtotal">₹0.00</strong></div><div class="summary-line"><span>Discount (10%)</span><strong id="billDiscount">−₹0.00</strong></div><div class="summary-line"><span>GST (5% after discount)</span><strong id="billGST">+₹0.00</strong></div><div class="summary-line total"><span>Grand Total</span><strong id="billGrand">₹0.00</strong></div></div><div class="bill-total"><div class="small">AMOUNT PAYABLE</div><div class="amount" id="payableAmount">₹0.00</div><p>Final amount after discount and GST</p></div></div>
+      </div>
+      <div class="action-row no-print"><button id="confirmBtn" class="btn btn-primary" onclick="confirmPayment()">Confirm <span id="confirmMode">Cash</span> Payment</button><button class="btn btn-light" onclick="window.print()">Print Bill</button><button class="btn btn-gold" onclick="newOrder()">Start New Order</button></div>
+    </div>
+  </section>
+</main>
+<div class="footer">Cafe Billing System · Demo project · All prices shown in Indian Rupees (₹)</div>
+</div>
+<script>
+const products = [
+  {id:1,name:"Cappuccino",category:"Hot Coffee",price:120,icon:"☕"},
+  {id:2,name:"Cold Coffee",category:"Cold Drinks",price:130,icon:"🧋"},
+  {id:3,name:"Veg Sandwich",category:"Snacks",price:150,icon:"🥪"},
+  {id:4,name:"Chocolate Brownie",category:"Desserts",price:90,icon:"🍫"}
+];
+const DEMO_USERS = {admin:{password:"admin123",role:"Admin"},cashier:{password:"cashier123",role:"Cashier"}};
+let currentUser = null;
+let cart = {};
+let paymentMode = "Cash";
+let billNumber = 1001;
+let tableNumber = 4;
+let paymentConfirmed = false;
+const money = n => "₹" + Number(n).toFixed(2);
+const byId = id => document.getElementById(id);
+function showPage(id){
+  document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));
+  byId(id).classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+byId("loginForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const user=byId("username").value.trim().toLowerCase();
+  const pass=byId("password").value;
+  if(DEMO_USERS[user] && DEMO_USERS[user].password===pass){
+    currentUser={username:user,role:DEMO_USERS[user].role};
+    byId("loginError").textContent="";
+    byId("staffLabel").textContent=currentUser.role+" · "+user;
+    byId("logoutBtn").classList.remove("hidden");
+    renderMenu();showPage("menuPage");
+  }else{byId("loginError").textContent="Invalid username or password. Please try again.";}
+});
+function logout(){currentUser=null;cart={};byId("logoutBtn").classList.add("hidden");byId("staffLabel").textContent="Demo billing portal";byId("username").value="";byId("password").value="";showPage("loginPage");}
+function renderMenu(){
+  byId("productGrid").innerHTML=products.map(p=>`
+    <article class="product"><div class="product-top"><div class="product-icon">${p.icon}</div><div class="price">${money(p.price)}</div></div>
+    <div><h3>${p.name}</h3><div class="category">${p.category} · <span class="available">Available</span></div></div>
+    <button class="btn btn-primary" onclick="addToCart(${p.id})">${cart[p.id]?"Add Another +":"Select Product +"}</button>
+    </article>`).join("");
+  updateCartCount();
+}
+function addToCart(id){cart[id]=(cart[id]||0)+1;renderMenu();byId("menuCartCount").textContent=cartCount(); }
+function cartCount(){return Object.values(cart).reduce((a,b)=>a+b,0);}
+function getItems(){return products.filter(p=>cart[p.id]).map(p=>({...p,qty:cart[p.id],total:p.price*cart[p.id]}));}
+function totals(){
+  const subtotal=getItems().reduce((s,p)=>s+p.total,0);
+  const discount=subtotal*.10;
+  const gst=(subtotal-discount)*.05;
+  return {subtotal,discount,gst,grand:subtotal-discount+gst};
+}
+function updateCartCount(){const el=byId("menuCartCount");if(el)el.textContent=cartCount();}
+function openCart(){renderCart();showPage("cartPage");}
+function changeQty(id,delta){cart[id]=(cart[id]||0)+delta;if(cart[id]<=0)delete cart[id];renderCart();renderMenu();}
+function removeItem(id){delete cart[id];renderCart();renderMenu();}
+function renderCart(){
+  const items=getItems();const c=byId("cartContent");
+  if(!items.length){c.innerHTML=`<div class="panel empty"><div class="product-icon">🛒</div><h2>Your cart is empty</h2><p class="muted">Go to the menu and select products to start an order.</p><button class="btn btn-primary" onclick="showPage('menuPage')">Browse Menu</button></div>`;return;}
+  const t=totals();
+  c.innerHTML=`<div class="cart-layout"><div class="panel"><h3>Selected Items (${cartCount()})</h3>${items.map(p=>`<div class="cart-row"><div><strong>${p.name}</strong><div class="category">${money(p.price)} each</div><button class="btn btn-danger" style="padding:6px 9px;margin-top:8px;font-size:11px" onclick="removeItem(${p.id})">Remove</button></div><div class="qty"><button aria-label="Decrease ${p.name}" onclick="changeQty(${p.id},-1)">−</button><strong>${p.qty}</strong><button aria-label="Increase ${p.name}" onclick="changeQty(${p.id},1)">+</button></div><div class="line-total">${money(p.total)}</div></div>`).join("")}<div class="action-row"><button class="btn btn-light" onclick="showPage('menuPage')">＋ Add More Products</button></div></div>
+  <aside class="panel summary-card"><h3>Order Summary</h3><div class="summary-line"><span>Sub-total</span><strong>${money(t.subtotal)}</strong></div><div class="summary-line"><span>Discount (10%)</span><strong>−${money(t.discount)}</strong></div><div class="summary-line"><span>GST (5%)</span><strong>+${money(t.gst)}</strong></div><div class="summary-line total"><span>Payable</span><strong>${money(t.grand)}</strong></div><p class="note">GST is calculated after applying the 10% discount.</p><button class="btn btn-primary full" onclick="prepareBilling()">Continue to Billing →</button></aside></div>`;
+}
+function prepareBilling(){if(!cartCount()){alert("Please select at least one product.");return;}paymentConfirmed=false;paymentMode="Cash";renderBill();setPayment("Cash");showPage("billingPage");}
+function renderBill(){
+  const items=getItems(),t=totals();
+  byId("billMeta").innerHTML=`BILL NO. ${billNumber}<br>TABLE ${tableNumber}<br>${new Date().toLocaleDateString("en-IN",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase()}`;
+  byId("billRows").innerHTML=items.map(p=>`<tr><td>${p.name}</td><td>${p.qty}</td><td>${p.price.toFixed(2)}</td><td>${p.total.toFixed(2)}</td></tr>`).join("");
+  byId("billSubtotal").textContent=money(t.subtotal);byId("billDiscount").textContent="−"+money(t.discount);byId("billGST").textContent="+"+money(t.gst);byId("billGrand").textContent=money(t.grand);byId("payableAmount").textContent=money(t.grand);
+  byId("billMessage").innerHTML="";byId("confirmBtn").disabled=false;byId("confirmBtn").classList.remove("hidden");byId("confirmMode").textContent=paymentMode;
+}
+function setPayment(mode){paymentMode=mode;byId("cashBtn").classList.toggle("active",mode==="Cash");byId("upiBtn").classList.toggle("active",mode==="UPI");byId("upiInfo").classList.toggle("hidden",mode!=="UPI");byId("confirmMode").textContent=mode;}
+function confirmPayment(){
+  if(paymentConfirmed)return;
+  paymentConfirmed=true;byId("confirmBtn").disabled=true;
+  byId("billMessage").innerHTML=`<div class="success">✓ Demo bill confirmed. Payment mode recorded: <strong>${paymentMode}</strong>. Bill No. ${billNumber}.</div>`;
+  byId("confirmBtn").textContent="Payment Confirmed";
+}
+function newOrder(){if(!paymentConfirmed && cartCount() && !confirm("Start a new order? Current cart will be cleared."))return;billNumber++;tableNumber=tableNumber>=10?1:tableNumber+1;cart={};paymentConfirmed=false;renderMenu();showPage("menuPage");}
+renderMenu();
+</script>
+</body>
+</html>
